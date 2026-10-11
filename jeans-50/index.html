@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jeans at Fifty</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* the approved look 13 sample's design: bone ground, ink type, a pair of pictures per look, a numbered shop list */
+  :root { --bone:#faf9f6; --ink:#161616; --muted:#6f6b66; --body:#3a3733; --line:#e4e1da; --frame:#eceae5;
+          --pin-bg:rgba(250,249,246,.92); --pin-fg:#161616; --pin-edge:rgba(22,22,22,.55); --tip-bg:#161616; --tip-fg:#faf9f6;
+          --sans:Geist, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bone:#151413; --ink:#f1efea; --muted:#a39e96;
+          --body:#d6d2cb; --line:#2c2a27; --frame:#1f1d1b; color-scheme:dark; } }
+  :root[data-theme="dark"] { --bone:#151413; --ink:#f1efea; --muted:#a39e96; --body:#d6d2cb; --line:#2c2a27; --frame:#1f1d1b;
+          color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+  body { background:var(--bone); color:var(--ink); font-family:var(--sans); line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:1120px; margin:0 auto; padding-inline:20px; padding-block:48px 72px; }
+  .kicker { font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin:0 0 14px; }
+  h1 { font-size:clamp(30px,5vw,50px); line-height:1.06; letter-spacing:-.02em; font-weight:600; margin:0 0 12px; text-wrap:balance; }
+  h2 { font-size:clamp(26px,4vw,40px); line-height:1.08; letter-spacing:-.02em; font-weight:600; margin:0 0 10px; text-wrap:balance; }
+  .lead { font-size:clamp(15px,2vw,18px); color:var(--body); max-width:62ch; margin:0 0 28px; }
+  .index { list-style:none; margin:8px 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+           column-gap:24px; border-top:1px solid var(--line); }
+  .index li { border-bottom:1px solid var(--line); min-width:0; }
+  .index a { display:flex; gap:10px; align-items:baseline; padding:12px 0; color:var(--ink); text-decoration:none; font-size:15px; }
+  .index a span { color:var(--muted); font-size:12px; font-weight:600; font-variant-numeric:tabular-nums; }
+  .index a:hover { color:var(--muted); }
+  .look { padding-top:64px; margin-top:64px; border-top:1px solid var(--line); scroll-margin-top:8px; }
+
+  .pair { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  figure { margin:0; min-width:0; }
+  .frame { position:relative; background:var(--frame); }
+  .frame img { display:block; width:100%; max-width:100%; height:auto; }
+  figcaption { font-size:13px; color:var(--muted); margin-top:8px; }
+
+  .pin { position:absolute; transform:translate(-50%,-50%); width:26px; height:26px; border-radius:50%;
+         background:var(--pin-bg); color:var(--pin-fg); border:1px solid var(--pin-edge);
+         font-size:12px; font-weight:600; display:grid; place-items:center; text-decoration:none;
+         box-shadow:0 1px 6px rgba(0,0,0,.12); transition:background .2s ease, transform .2s ease; }
+  .pin:hover, .pin:focus-visible { background:var(--tip-bg); color:var(--tip-fg); transform:translate(-50%,-50%) scale(1.08); outline:none; }
+  .pin .tip { position:absolute; left:50%; bottom:calc(100% + 8px); transform:translateX(-50%); white-space:nowrap;
+              background:var(--tip-bg); color:var(--tip-fg); font-size:12px; font-weight:500; padding:6px 10px;
+              opacity:0; pointer-events:none; transition:opacity .2s ease; }
+  .pin:hover .tip, .pin:focus-visible .tip { opacity:1; }
+
+  .shop { margin-top:32px; border-top:1px solid var(--line); }
+  .shop h3 { font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); font-weight:600; margin:22px 0 6px; }
+  .shop ol { list-style:none; margin:0; padding:0; }
+  .shop li { display:grid; grid-template-columns:32px minmax(0,1fr) auto; gap:12px; align-items:baseline;
+             padding:14px 0; border-bottom:1px solid var(--line); }
+  .num { font-size:13px; font-weight:600; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .what { font-size:16px; }
+  .what small { display:block; font-size:13px; color:var(--muted); margin-top:2px; }
+  .go { font-size:14px; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--ink); white-space:nowrap; }
+  .go:hover { color:var(--muted); border-color:var(--muted); }
+  .go:focus-visible, .index a:focus-visible { outline:2px solid var(--ink); outline-offset:3px; }
+  .note { font-size:13px; color:var(--muted); margin-top:56px; padding-top:20px; border-top:1px solid var(--line); max-width:70ch; }
+
+  @media (max-width:720px) {
+    .wrap { padding-inline:16px; padding-block:32px 56px; }
+    .pair { grid-template-columns:1fr; }
+    .shop li { grid-template-columns:26px minmax(0,1fr); }
+    .go { grid-column:2; justify-self:start; margin-top:4px; }
+    .look { padding-top:40px; margin-top:40px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">Metka Albreht · Studies</p>
+  <h1>Jeans at fifty</h1>
+  <p class="lead">10 ways to wear jeans, chosen by Metka. Each look is shown twice: the pieces laid out, and worn. Every piece is a real product you can buy; tap a number on the pieces, or a line in the list, to open its shop.</p>
+  <ol class="index"><li><a href="#look-01"><span>01</span>Lunch out</a></li><li><a href="#look-03"><span>02</span>Weekend in town</a></li><li><a href="#look-04"><span>03</span>Travel</a></li><li><a href="#look-07"><span>04</span>Weekend walk</a></li><li><a href="#look-09"><span>05</span>Browsing</a></li><li><a href="#look-10"><span>06</span>Evening in town</a></li><li><a href="#look-11"><span>07</span>Smart work day</a></li><li><a href="#look-12"><span>08</span>Summer day</a></li><li><a href="#look-13"><span>09</span>Afternoon out</a></li><li><a href="#look-14"><span>10</span>A day in town</a></li></ol>
+
+  <section class="look" id="look-01">
+    <p class="kicker">Look 01</p>
+    <h2>Lunch out</h2>
+    <p class="lead">A charcoal waistcoat over a white poplin shirt, light wide-leg jeans with a slim brown belt, black pointed flats and fine gold jewellery.</p>
+    <div class="pair">
+      <figure>
+        <div class="frame">
+          <img src="look01-flat.jpg" alt="The pieces laid out flat: a charcoal waistcoat over a white shirt, light wide-leg jeans with a brown belt, black pointed flats, a layered gold necklace and gold hoops" width="1024" height="1536" loading="eager">
+          <a class="pin" style="left:48%;top:15%" href="https://rejinapyo.com/products/evie-waistcoat-wool-suiting-charcoal" target="_blank" rel="noopener" aria-label="1, Waistcoat · Rejina Pyo">1<span class="tip">Waistcoat · Rejina Pyo</span></a><a class="pin" style="left:30%;top:22%" href="https://www.arket.com/en-eu/product/relaxed-fit-poplin-shirt-white-1349067008/" target="_blank" rel="noopener" aria-label="2, Poplin shirt · ARKET">2<span class="tip">Poplin shirt · ARKET</span></a><a class="pin" style="left:36%;top:62%" href="https://www.arket.com/en-eu/product/coral-wide-jeans-light-blue-1250488021/" target="_blank" rel="noopener" aria-label="3, Wide-leg jeans · ARKET">3<span class="tip">Wide-leg jeans · ARKET</span></a><a class="pin" style="left:57%;top:33%" href="https://www.arket.com/en-eu/product/slim-leather-belt-brown-1346607004/" target="_blank" rel="noopener" aria-label="4, Leather belt · ARKET">4<span class="tip">Leather belt · ARKET</span></a><a class="pin" style="left:44%;top:88%" href="https://www.net-a-porter.com/en-gb/shop/product/aeyde/shoes/pointed-toe-flats/moa-leather-point-toe-flats/46376663162389772" target="_blank" rel="noopener" aria-label="5, Pointed flats · Aeyde">5<span class="tip">Pointed flats · Aeyde</span></a><a class="pin" style="left:78%;top:37%" href="https://www.heyhappiness.com/products/layered-circle-necklace-gold" target="_blank" rel="noopener" aria-label="6, Layered necklace · Hey Happiness">6<span class="tip">Layered necklace · Hey Happiness</span></a><a class="pin" style="left:86%;top:49%" href="https://systerp.com/en-eu/collections/hoops/products/cavelle-big-plain-hoops-gold" target="_blank" rel="noopener" aria-label="7, Gold hoops · Syster P">7<span class="tip">Gold hoops · Syster P</span></a>
+        </div>
+        <figcaption>The pieces</figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><img src="look01-model.jpg" alt="A woman in the same outfit on a cafe terrace" width="1024" height="1536" loading="eager"></div>
+        <figcaption>Worn</figcaption>
+      </figure>
+    </div>
+    <div class="shop">
+      <h3>Shop the look</h3>
+      <ol><li><span class="num">1</span><span class="what">Evie waistcoat, charcoal wool<small>Rejina Pyo · €301.95</small></span><a class="go" href="https://rejinapyo.com/products/evie-waistcoat-wool-suiting-charcoal" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">2</span><span class="what">Relaxed-fit poplin shirt, white<small>ARKET · €79</small></span><a class="go" href="https://www.arket.com/en-eu/product/relaxed-fit-poplin-shirt-white-1349067008/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">3</span><span class="what">Coral wide-leg jeans, light blue<small>ARKET · €49.50</small></span><a class="go" href="https://www.arket.com/en-eu/product/coral-wide-jeans-light-blue-1250488021/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">4</span><span class="what">Slim leather belt, brown<small>ARKET · €39</small></span><a class="go" href="https://www.arket.com/en-eu/product/slim-leather-belt-brown-1346607004/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">5</span><span class="what">Moa pointed leather flats, black<small>Aeyde, at NET-A-PORTER · £280</small></span><a class="go" href="https://www.net-a-porter.com/en-gb/shop/product/aeyde/shoes/pointed-toe-flats/moa-leather-point-toe-flats/46376663162389772" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">6</span><span class="what">Layered circle necklace, gold<small>Hey Happiness · €32.90</small></span><a class="go" href="https://www.heyhappiness.com/products/layered-circle-necklace-gold" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">7</span><span class="what">Cavelle plain hoops, gold<small>Syster P · €89</small></span><a class="go" href="https://systerp.com/en-eu/collections/hoops/products/cavelle-big-plain-hoops-gold" target="_blank" rel="noopener">View in shop</a></li></ol>
+    </div>
+  </section>
+  <section class="look" id="look-03">
+    <p class="kicker">Look 02</p>
+    <h2>Weekend in town</h2>
+    <p class="lead">A taupe knit vest over a white poplin shirt, mid-blue wide-leg jeans, white platform trainers and a taupe-grey leather bowling bag.</p>
+    <div class="pair">
+      <figure>
+        <div class="frame">
+          <img src="look03-flat.jpg" alt="The pieces laid out flat: a taupe knit vest over a white shirt, mid-blue wide-leg jeans, a taupe-grey leather bag and white trainers" width="1024" height="1536" loading="lazy">
+          <a class="pin" style="left:48%;top:19%" href="https://www.cos.com/en-eu-e/women/womenswear/knitwear/vests/product/wool-v-neck-tunic-vest-beige-mlange-1321257002" target="_blank" rel="noopener" aria-label="1, Knit vest · COS">1<span class="tip">Knit vest · COS</span></a><a class="pin" style="left:27%;top:26%" href="https://www.arket.com/en-eu/product/relaxed-fit-poplin-shirt-white-1349067008/" target="_blank" rel="noopener" aria-label="2, Poplin shirt · ARKET">2<span class="tip">Poplin shirt · ARKET</span></a><a class="pin" style="left:38%;top:60%" href="https://www.cos.com/en-eu-e/women/womenswear/jeans/wideleg/product/tide-jeans-wide-dusty-blue-1137112012" target="_blank" rel="noopener" aria-label="3, Wide-leg jeans · COS">3<span class="tip">Wide-leg jeans · COS</span></a><a class="pin" style="left:46%;top:88%" href="https://www.vagabond.com/si/zoe-platform-5927-101-01/" target="_blank" rel="noopener" aria-label="4, White trainers · Vagabond Shoemakers">4<span class="tip">White trainers · Vagabond Shoemakers</span></a><a class="pin" style="left:77%;top:55%" href="https://luomoeladonnaboutique.it/en/collections/all/products/avenue-67-borsa-melody-in-pelle-tortora-melody-tortora" target="_blank" rel="noopener" aria-label="5, Leather bag · Avenue 67">5<span class="tip">Leather bag · Avenue 67</span></a>
+        </div>
+        <figcaption>The pieces</figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><img src="look03-model.jpg" alt="A woman in the same outfit on a city street with shopfronts" width="1024" height="1536" loading="lazy"></div>
+        <figcaption>Worn</figcaption>
+      </figure>
+    </div>
+    <div class="shop">
+      <h3>Shop the look</h3>
+      <ol><li><span class="num">1</span><span class="what">Wool V-neck tunic vest, beige melange<small>COS · €89</small></span><a class="go" href="https://www.cos.com/en-eu-e/women/womenswear/knitwear/vests/product/wool-v-neck-tunic-vest-beige-mlange-1321257002" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">2</span><span class="what">Relaxed-fit poplin shirt, white<small>ARKET · €79</small></span><a class="go" href="https://www.arket.com/en-eu/product/relaxed-fit-poplin-shirt-white-1349067008/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">3</span><span class="what">Tide wide-leg jeans, dusty blue<small>COS · €89</small></span><a class="go" href="https://www.cos.com/en-eu-e/women/womenswear/jeans/wideleg/product/tide-jeans-wide-dusty-blue-1137112012" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">4</span><span class="what">Zoe platform trainers, white leather<small>Vagabond Shoemakers · €120</small></span><a class="go" href="https://www.vagabond.com/si/zoe-platform-5927-101-01/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">5</span><span class="what">Melody leather bag, tortora (taupe-grey)<small>Avenue 67, at L&#x27;Uomo e la Donna · €203</small></span><a class="go" href="https://luomoeladonnaboutique.it/en/collections/all/products/avenue-67-borsa-melody-in-pelle-tortora-melody-tortora" target="_blank" rel="noopener">View in shop</a></li></ol>
+    </div>
+  </section>
+  <section class="look" id="look-04">
+    <p class="kicker">Look 03</p>
+    <h2>Travel</h2>
+    <p class="lead">An olive overshirt over a white tank, mid-blue wide-leg jeans with a brown belt, a taupe suede shoulder bag, white leather trainers and a black cabin case.</p>
+    <div class="pair">
+      <figure>
+        <div class="frame">
+          <img src="look04-flat.jpg" alt="The pieces laid out flat: an olive overshirt, a white tank top, mid-blue wide-leg jeans with a brown belt, a taupe suede bag, white trainers and a black cabin suitcase" width="1024" height="1536" loading="lazy">
+          <a class="pin" style="left:30%;top:18%" href="https://www.octobre-editions.com/eu-en/product/boxy-jackson-overshirt/olive-green" target="_blank" rel="noopener" aria-label="1, Overshirt · Octobre Éditions">1<span class="tip">Overshirt · Octobre Éditions</span></a><a class="pin" style="left:77%;top:21%" href="https://www.arket.com/en-eu/product/scoop-neck-tank-top-white-1341340004/" target="_blank" rel="noopener" aria-label="2, Tank top · ARKET">2<span class="tip">Tank top · ARKET</span></a><a class="pin" style="left:45%;top:66%" href="https://www.stories.com/en-eu/product/wide-leg-jeans-mid-blue-1259943024/" target="_blank" rel="noopener" aria-label="3, Wide-leg jeans · &amp; Other Stories">3<span class="tip">Wide-leg jeans · &amp; Other Stories</span></a><a class="pin" style="left:61%;top:39%" href="https://www.sezane.com/eu-en/product/taylor-belt/natural-heritage" target="_blank" rel="noopener" aria-label="4, Leather belt · Sézane">4<span class="tip">Leather belt · Sézane</span></a><a class="pin" style="left:83%;top:57%" href="https://mitibags.com/product/bags/crossbody-bags/slouchy-taupe-suede-leather-shoulder-bag/" target="_blank" rel="noopener" aria-label="5, Suede bag · MITI">5<span class="tip">Suede bag · MITI</span></a><a class="pin" style="left:84%;top:77%" href="https://www.scarosso.com/en-si/women/shoes/sneakers/cecilia-white-CECILIASNEAWHICALF.html" target="_blank" rel="noopener" aria-label="6, White trainers · Scarosso">6<span class="tip">White trainers · Scarosso</span></a><a class="pin" style="left:16%;top:70%" href="https://www.sakoi.com/products/samsonite-restackd-spinner-55-exp-black-suitcase" target="_blank" rel="noopener" aria-label="7, Cabin case · Samsonite">7<span class="tip">Cabin case · Samsonite</span></a>
+        </div>
+        <figcaption>The pieces</figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><img src="look04-model.jpg" alt="A woman in the same outfit pulling the suitcase through a bright airport terminal" width="1024" height="1536" loading="lazy"></div>
+        <figcaption>Worn</figcaption>
+      </figure>
+    </div>
+    <div class="shop">
+      <h3>Shop the look</h3>
+      <ol><li><span class="num">1</span><span class="what">Boxy Jackson overshirt, olive<small>Octobre Éditions · €125</small></span><a class="go" href="https://www.octobre-editions.com/eu-en/product/boxy-jackson-overshirt/olive-green" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">2</span><span class="what">Scoop-neck tank top, white<small>ARKET · €25</small></span><a class="go" href="https://www.arket.com/en-eu/product/scoop-neck-tank-top-white-1341340004/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">3</span><span class="what">Wide-leg jeans, mid blue<small>&amp; Other Stories · €89</small></span><a class="go" href="https://www.stories.com/en-eu/product/wide-leg-jeans-mid-blue-1259943024/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">4</span><span class="what">Taylor belt, natural brown leather<small>Sézane · €65</small></span><a class="go" href="https://www.sezane.com/eu-en/product/taylor-belt/natural-heritage" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">5</span><span class="what">Slouchy suede shoulder bag, taupe<small>MITI · €79</small></span><a class="go" href="https://mitibags.com/product/bags/crossbody-bags/slouchy-taupe-suede-leather-shoulder-bag/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">6</span><span class="what">Cecilia leather trainers, white<small>Scarosso · €245</small></span><a class="go" href="https://www.scarosso.com/en-si/women/shoes/sneakers/cecilia-white-CECILIASNEAWHICALF.html" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">7</span><span class="what">RestackD Spinner 55 cabin case, black<small>Samsonite, at Sakoi · €224.10</small></span><a class="go" href="https://www.sakoi.com/products/samsonite-restackd-spinner-55-exp-black-suitcase" target="_blank" rel="noopener">View in shop</a></li></ol>
+    </div>
+  </section>
+  <section class="look" id="look-07">
+    <p class="kicker">Look 04</p>
+    <h2>Weekend walk</h2>
+    <p class="lead">A pale blue striped shirt with a camel jumper tied over the shoulders, mid-blue straight jeans, brown suede boat shoes, a canvas tote with brown leather trim and a small gold watch.</p>
+    <div class="pair">
+      <figure>
+        <div class="frame">
+          <img src="look07-flat.jpg" alt="The pieces laid out flat: a pale blue striped shirt, a camel crew-neck jumper, mid-blue straight jeans, a cream canvas tote with brown trim, brown suede boat shoes and a gold watch" width="1024" height="1536" loading="lazy">
+          <a class="pin" style="left:27%;top:20%" href="https://www.arket.com/en-eu/product/cotton-shirt-light-bluestriped-1331262002/" target="_blank" rel="noopener" aria-label="1, Striped shirt · ARKET">1<span class="tip">Striped shirt · ARKET</span></a><a class="pin" style="left:73%;top:20%" href="https://si.benetton.com/products/camel-crew-neck-sweater-in-pure-merino-wool-camel-1002d1k01_10g" target="_blank" rel="noopener" aria-label="2, Camel jumper · United Colors of Benetton">2<span class="tip">Camel jumper · United Colors of Benetton</span></a><a class="pin" style="left:27%;top:62%" href="https://shop.mango.com/si/en/p/women/jeans/straight/high-waist-straight-jeans/37035853/TM/00" target="_blank" rel="noopener" aria-label="3, Straight jeans · Mango">3<span class="tip">Straight jeans · Mango</span></a><a class="pin" style="left:66%;top:80%" href="https://julesjenn.com/en/products/womens-brown-suede-boat-shoes?variant=56581992055116" target="_blank" rel="noopener" aria-label="4, Boat shoes · JULES &amp; JENN">4<span class="tip">Boat shoes · JULES &amp; JENN</span></a><a class="pin" style="left:72%;top:56%" href="https://www.llbean.com/llb/shop/20011118?attrValue_0=57638&amp;bc=50-514029&amp;csp=a&amp;feat=514029-GN3&amp;page=LeatherTrim-Waxed-Canvas-Tote&amp;pos=22" target="_blank" rel="noopener" aria-label="5, Canvas tote · L.L.Bean">5<span class="tip">Canvas tote · L.L.Bean</span></a><a class="pin" style="left:86%;top:74%" href="https://stentime.si/rocne-ure/zenske-ure/rosefield-scgsg-s05" target="_blank" rel="noopener" aria-label="6, Gold watch · Rosefield">6<span class="tip">Gold watch · Rosefield</span></a>
+        </div>
+        <figcaption>The pieces</figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><img src="look07-model.jpg" alt="A woman in the same outfit walking along a riverside promenade with her phone" width="1024" height="1536" loading="lazy"></div>
+        <figcaption>Worn</figcaption>
+      </figure>
+    </div>
+    <div class="shop">
+      <h3>Shop the look</h3>
+      <ol><li><span class="num">1</span><span class="what">Cotton shirt, light blue stripe<small>ARKET · €39.50</small></span><a class="go" href="https://www.arket.com/en-eu/product/cotton-shirt-light-bluestriped-1331262002/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">2</span><span class="what">Crew-neck merino jumper, camel<small>United Colors of Benetton · €64.95</small></span><a class="go" href="https://si.benetton.com/products/camel-crew-neck-sweater-in-pure-merino-wool-camel-1002d1k01_10g" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">3</span><span class="what">High-waist straight jeans, medium blue<small>Mango · €25.99</small></span><a class="go" href="https://shop.mango.com/si/en/p/women/jeans/straight/high-waist-straight-jeans/37035853/TM/00" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">4</span><span class="what">Thelma suede boat shoes, brown<small>JULES &amp; JENN · €135</small></span><a class="go" href="https://julesjenn.com/en/products/womens-brown-suede-boat-shoes?variant=56581992055116" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">5</span><span class="what">Leather-trim canvas tote, natural and brown<small>L.L.Bean · €165</small></span><a class="go" href="https://www.llbean.com/llb/shop/20011118?attrValue_0=57638&amp;bc=50-514029&amp;csp=a&amp;feat=514029-GN3&amp;page=LeatherTrim-Waxed-Canvas-Tote&amp;pos=22" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">6</span><span class="what">Small Edit watch, champagne gold<small>Rosefield, at Sten Time · €129.90</small></span><a class="go" href="https://stentime.si/rocne-ure/zenske-ure/rosefield-scgsg-s05" target="_blank" rel="noopener">View in shop</a></li></ol>
+    </div>
+  </section>
+  <section class="look" id="look-09">
+    <p class="kicker">Look 05</p>
+    <h2>Browsing</h2>
+    <p class="lead">A grey sweater vest over a white poplin shirt, dark barrel jeans with a black belt, chunky black loafers and a small brown leather crossbody.</p>
+    <div class="pair">
+      <figure>
+        <div class="frame">
+          <img src="look09-flat.jpg" alt="The pieces laid out flat: a grey sweater vest over a white shirt, dark barrel jeans with a black belt, a brown leather crossbody bag and black chunky loafers" width="1024" height="1536" loading="lazy">
+          <a class="pin" style="left:46%;top:15%" href="https://rifo-lab.com/en/products/womens-recycled-wool-sweater-vest-melania-grey" target="_blank" rel="noopener" aria-label="1, Sweater vest · Rifò">1<span class="tip">Sweater vest · Rifò</span></a><a class="pin" style="left:24%;top:23%" href="https://www.arket.com/en-eu/product/regular-fit-poplin-shirt-white-1243051003/" target="_blank" rel="noopener" aria-label="2, Poplin shirt · ARKET">2<span class="tip">Poplin shirt · ARKET</span></a><a class="pin" style="left:37%;top:60%" href="https://www.whistles.com/product/high-rise-clean-barrel-trouser-41635.html" target="_blank" rel="noopener" aria-label="3, Barrel jeans · Whistles">3<span class="tip">Barrel jeans · Whistles</span></a><a class="pin" style="left:58%;top:34%" href="https://www.stories.com/en-eu/product/leather-belt-black-1312213001/" target="_blank" rel="noopener" aria-label="4, Leather belt · &amp; Other Stories">4<span class="tip">Leather belt · &amp; Other Stories</span></a><a class="pin" style="left:41%;top:88%" href="https://www.vagabond.com/si/kenova-5241-301-20/" target="_blank" rel="noopener" aria-label="5, Chunky loafers · Vagabond Shoemakers">5<span class="tip">Chunky loafers · Vagabond Shoemakers</span></a><a class="pin" style="left:80%;top:56%" href="https://www.villageleathers.com/products/missouri-brown-leather-shoulder-bag" target="_blank" rel="noopener" aria-label="6, Crossbody bag · Village Leathers">6<span class="tip">Crossbody bag · Village Leathers</span></a>
+        </div>
+        <figcaption>The pieces</figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><img src="look09-model.jpg" alt="A woman in the same outfit browsing in a bookshop" width="1024" height="1536" loading="lazy"></div>
+        <figcaption>Worn</figcaption>
+      </figure>
+    </div>
+    <div class="shop">
+      <h3>Shop the look</h3>
+      <ol><li><span class="num">1</span><span class="what">Melania recycled wool sweater vest, grey<small>Rifò · €89</small></span><a class="go" href="https://rifo-lab.com/en/products/womens-recycled-wool-sweater-vest-melania-grey" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">2</span><span class="what">Regular-fit poplin shirt, white<small>ARKET · €41.30</small></span><a class="go" href="https://www.arket.com/en-eu/product/regular-fit-poplin-shirt-white-1243051003/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">3</span><span class="what">High-rise clean barrel jeans, dark denim<small>Whistles · £99</small></span><a class="go" href="https://www.whistles.com/product/high-rise-clean-barrel-trouser-41635.html" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">4</span><span class="what">Leather belt, black<small>&amp; Other Stories · €59</small></span><a class="go" href="https://www.stories.com/en-eu/product/leather-belt-black-1312213001/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">5</span><span class="what">Kenova loafers, black leather<small>Vagabond Shoemakers · €120</small></span><a class="go" href="https://www.vagabond.com/si/kenova-5241-301-20/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">6</span><span class="what">Missouri leather shoulder bag, brown<small>Village Leathers · €115.95</small></span><a class="go" href="https://www.villageleathers.com/products/missouri-brown-leather-shoulder-bag" target="_blank" rel="noopener">View in shop</a></li></ol>
+    </div>
+  </section>
+  <section class="look" id="look-10">
+    <p class="kicker">Look 06</p>
+    <h2>Evening in town</h2>
+    <p class="lead">A burgundy leather utility jacket over a chocolate merino turtleneck, dark straight jeans, a black leather tote, tortoiseshell sunglasses, silver square earrings and black ankle boots.</p>
+    <div class="pair">
+      <figure>
+        <div class="frame">
+          <img src="look10-flat.jpg" alt="The pieces laid out flat: a burgundy leather jacket, a dark brown turtleneck, dark jeans, a black leather tote, tortoiseshell sunglasses, silver square earrings and black ankle boots" width="1024" height="1536" loading="lazy">
+          <a class="pin" style="left:28%;top:17%" href="https://www.asos.com/barneys-originals/barneys-originals-real-leather-utility-jacket-in-burgundy/prd/208166211" target="_blank" rel="noopener" aria-label="1, Leather jacket · Barneys Originals">1<span class="tip">Leather jacket · Barneys Originals</span></a><a class="pin" style="left:75%;top:20%" href="https://www.illanificio.com/en/products/raglan-turtleneck-in-merino-wool-dark-brown" target="_blank" rel="noopener" aria-label="2, Merino turtleneck · Il Lanificio">2<span class="tip">Merino turtleneck · Il Lanificio</span></a><a class="pin" style="left:22%;top:62%" href="https://www.cos.com/en-eu-e/women/womenswear/jeans/straightleg/product/reprise-straight-leg-jeans-dark-indigo-1298075003" target="_blank" rel="noopener" aria-label="3, Straight jeans · COS">3<span class="tip">Straight jeans · COS</span></a><a class="pin" style="left:70%;top:54%" href="https://www.arket.com/en-eu/product/leather-tote-bag-black-1346616001/" target="_blank" rel="noopener" aria-label="4, Leather tote · ARKET">4<span class="tip">Leather tote · ARKET</span></a><a class="pin" style="left:65%;top:66%" href="https://cubitts.com/products/herbrand-sunglasses" target="_blank" rel="noopener" aria-label="5, Sunglasses · Cubitts">5<span class="tip">Sunglasses · Cubitts</span></a><a class="pin" style="left:85%;top:66%" href="https://rhokea.com/en-eu/collections/stud-earrings/products/square-stud-earrings-in-silver?variant=55786351198553" target="_blank" rel="noopener" aria-label="6, Square earrings · Rhokea">6<span class="tip">Square earrings · Rhokea</span></a><a class="pin" style="left:73%;top:83%" href="https://www.vagabond.com/si/marja-5613-001-20/" target="_blank" rel="noopener" aria-label="7, Ankle boots · Vagabond Shoemakers">7<span class="tip">Ankle boots · Vagabond Shoemakers</span></a>
+        </div>
+        <figcaption>The pieces</figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><img src="look10-model.jpg" alt="A woman in the same outfit on a city street at dusk" width="1024" height="1536" loading="lazy"></div>
+        <figcaption>Worn</figcaption>
+      </figure>
+    </div>
+    <div class="shop">
+      <h3>Shop the look</h3>
+      <ol><li><span class="num">1</span><span class="what">Real leather utility jacket, burgundy<small>Barneys Originals, at ASOS · £105</small></span><a class="go" href="https://www.asos.com/barneys-originals/barneys-originals-real-leather-utility-jacket-in-burgundy/prd/208166211" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">2</span><span class="what">Raglan merino turtleneck, dark brown<small>Il Lanificio · €85</small></span><a class="go" href="https://www.illanificio.com/en/products/raglan-turtleneck-in-merino-wool-dark-brown" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">3</span><span class="what">Chord straight-leg jeans, dark indigo<small>COS · €89</small></span><a class="go" href="https://www.cos.com/en-eu-e/women/womenswear/jeans/straightleg/product/reprise-straight-leg-jeans-dark-indigo-1298075003" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">4</span><span class="what">Leather tote bag, black<small>ARKET · €199</small></span><a class="go" href="https://www.arket.com/en-eu/product/leather-tote-bag-black-1346616001/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">5</span><span class="what">Herbrand sunglasses, dark turtle<small>Cubitts · €200</small></span><a class="go" href="https://cubitts.com/products/herbrand-sunglasses" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">6</span><span class="what">Square stud earrings, silver<small>Rhokea · €75.95</small></span><a class="go" href="https://rhokea.com/en-eu/collections/stud-earrings/products/square-stud-earrings-in-silver?variant=55786351198553" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">7</span><span class="what">Marja leather ankle boots, black<small>Vagabond Shoemakers · €160</small></span><a class="go" href="https://www.vagabond.com/si/marja-5613-001-20/" target="_blank" rel="noopener">View in shop</a></li></ol>
+    </div>
+  </section>
+  <section class="look" id="look-11">
+    <p class="kicker">Look 07</p>
+    <h2>Smart work day</h2>
+    <p class="lead">A black blazer over a camel merino jumper and a white shirt, a leopard belt, light wide-leg jeans, black horsebit loafers, a taupe leather tote, gold aviators and a layered coin necklace.</p>
+    <div class="pair">
+      <figure>
+        <div class="frame">
+          <img src="look11-flat.jpg" alt="The pieces laid out flat: a black blazer over a camel jumper and white shirt, light wide-leg jeans with a leopard belt, a taupe tote, gold aviator sunglasses, a layered gold necklace and black horsebit loafers" width="1024" height="1536" loading="lazy">
+          <a class="pin" style="left:36%;top:15%" href="https://www.cos.com/en-eu-e/women/womenswear/coatsjackets/blazers/product/twill-single-breasted-blazer-black-1294894004" target="_blank" rel="noopener" aria-label="1, Black blazer · COS">1<span class="tip">Black blazer · COS</span></a><a class="pin" style="left:50%;top:17%" href="https://www.next.si/en/style/su998034/v62995" target="_blank" rel="noopener" aria-label="2, Merino jumper · THE SET">2<span class="tip">Merino jumper · THE SET</span></a><a class="pin" style="left:28%;top:23%" href="https://www.arket.com/en-eu/product/fitted-cotton-poplin-shirt-white-1361604001/" target="_blank" rel="noopener" aria-label="3, Poplin shirt · ARKET">3<span class="tip">Poplin shirt · ARKET</span></a><a class="pin" style="left:60%;top:31%" href="https://www.reiss.com/si/en/style/su957737/g60818" target="_blank" rel="noopener" aria-label="4, Leopard belt · Reiss">4<span class="tip">Leopard belt · Reiss</span></a><a class="pin" style="left:43%;top:62%" href="https://www.arket.com/en-eu/product/cedar-oversized-wide-jeans-light-blue-1322849001/" target="_blank" rel="noopener" aria-label="5, Wide-leg jeans · ARKET">5<span class="tip">Wide-leg jeans · ARKET</span></a><a class="pin" style="left:50%;top:88%" href="https://www.stories.com/en-eu/product/horsebit-leather-loafers-black-1364194001/" target="_blank" rel="noopener" aria-label="6, Horsebit loafers · &amp; Other Stories">6<span class="tip">Horsebit loafers · &amp; Other Stories</span></a><a class="pin" style="left:17%;top:45%" href="https://www.boozt.com/eu/en/depeche/recife-shopper_33189090/233228085" target="_blank" rel="noopener" aria-label="7, Leather tote · DEPECHE">7<span class="tip">Leather tote · DEPECHE</span></a><a class="pin" style="left:83%;top:36%" href="https://mellerbrand.com/products/alia-gold-olive" target="_blank" rel="noopener" aria-label="8, Aviators · Meller">8<span class="tip">Aviators · Meller</span></a><a class="pin" style="left:83%;top:50%" href="https://orelia.com/products/multi-row-coin-necklace" target="_blank" rel="noopener" aria-label="9, Coin necklace · Orelia">9<span class="tip">Coin necklace · Orelia</span></a>
+        </div>
+        <figcaption>The pieces</figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><img src="look11-model.jpg" alt="A woman in the same outfit in a bright contemporary gallery" width="1024" height="1536" loading="lazy"></div>
+        <figcaption>Worn</figcaption>
+      </figure>
+    </div>
+    <div class="shop">
+      <h3>Shop the look</h3>
+      <ol><li><span class="num">1</span><span class="what">Twill single-breasted blazer, black<small>COS · €179</small></span><a class="go" href="https://www.cos.com/en-eu-e/women/womenswear/coatsjackets/blazers/product/twill-single-breasted-blazer-black-1294894004" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">2</span><span class="what">Crew-neck merino jumper, caramel<small>THE SET, at Next · €45</small></span><a class="go" href="https://www.next.si/en/style/su998034/v62995" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">3</span><span class="what">Fitted cotton poplin shirt, white<small>ARKET · €69</small></span><a class="go" href="https://www.arket.com/en-eu/product/fitted-cotton-poplin-shirt-white-1361604001/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">4</span><span class="what">Belinda leopard square-buckle belt<small>Reiss · €70</small></span><a class="go" href="https://www.reiss.com/si/en/style/su957737/g60818" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">5</span><span class="what">Cedar oversized wide jeans, light blue<small>ARKET · €99</small></span><a class="go" href="https://www.arket.com/en-eu/product/cedar-oversized-wide-jeans-light-blue-1322849001/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">6</span><span class="what">Horsebit leather loafers, black<small>&amp; Other Stories · €129</small></span><a class="go" href="https://www.stories.com/en-eu/product/horsebit-leather-loafers-black-1364194001/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">7</span><span class="what">Recife leather shopper, taupe<small>DEPECHE, at Boozt · €200</small></span><a class="go" href="https://www.boozt.com/eu/en/depeche/recife-shopper_33189090/233228085" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">8</span><span class="what">Alia aviator sunglasses, gold<small>Meller · €54</small></span><a class="go" href="https://mellerbrand.com/products/alia-gold-olive" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">9</span><span class="what">Multi-row coin necklace, gold<small>Orelia · €46</small></span><a class="go" href="https://orelia.com/products/multi-row-coin-necklace" target="_blank" rel="noopener">View in shop</a></li></ol>
+    </div>
+  </section>
+  <section class="look" id="look-12">
+    <p class="kicker">Look 08</p>
+    <h2>Summer day</h2>
+    <p class="lead">A white oversized linen shirt, dark wide-leg jeans, white leather trainers, a cognac leather tote and a fine layered gold necklace.</p>
+    <div class="pair">
+      <figure>
+        <div class="frame">
+          <img src="look12-flat.jpg" alt="The pieces laid out flat: a white linen shirt, dark wide-leg jeans, a cognac leather tote, white trainers and a layered gold necklace" width="1024" height="1536" loading="lazy">
+          <a class="pin" style="left:37%;top:17%" href="https://woodstocklaundry.eu/en-be/products/womens-white-linen-shirt-oversized" target="_blank" rel="noopener" aria-label="1, Linen shirt · Woodstock Laundry">1<span class="tip">Linen shirt · Woodstock Laundry</span></a><a class="pin" style="left:35%;top:62%" href="https://shop.mango.com/si/en/p/women/jeans/plus-sizes/high-waisted-wideleg-jeans/37004100/TO/01" target="_blank" rel="noopener" aria-label="2, Wide-leg jeans · Mango">2<span class="tip">Wide-leg jeans · Mango</span></a><a class="pin" style="left:77%;top:79%" href="https://www.next.si/en/style/su930044/e85999" target="_blank" rel="noopener" aria-label="3, White trainers · Next">3<span class="tip">White trainers · Next</span></a><a class="pin" style="left:77%;top:50%" href="https://www.zalando.si/zign-leather-torba-za-nakupovanje-cognac-zi151h08b-o11.html" target="_blank" rel="noopener" aria-label="4, Leather tote · Zign by Zalando">4<span class="tip">Leather tote · Zign by Zalando</span></a><a class="pin" style="left:78%;top:18%" href="https://www.zalando.si/orelia-drop-row-necklace-3-pack-verizica-pale-gold-coloured-rl651l0lp-f11.html" target="_blank" rel="noopener" aria-label="5, Layered necklace · Orelia">5<span class="tip">Layered necklace · Orelia</span></a>
+        </div>
+        <figcaption>The pieces</figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><img src="look12-model.jpg" alt="A woman in the same outfit on a sunny street in a seaside town" width="1024" height="1536" loading="lazy"></div>
+        <figcaption>Worn</figcaption>
+      </figure>
+    </div>
+    <div class="shop">
+      <h3>Shop the look</h3>
+      <ol><li><span class="num">1</span><span class="what">Oversized linen shirt, white<small>Woodstock Laundry · €70</small></span><a class="go" href="https://woodstocklaundry.eu/en-be/products/womens-white-linen-shirt-oversized" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">2</span><span class="what">High-waisted wide-leg jeans, dark blue<small>Mango · €39.99</small></span><a class="go" href="https://shop.mango.com/si/en/p/women/jeans/plus-sizes/high-waisted-wideleg-jeans/37004100/TO/01" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">3</span><span class="what">Chunky leather trainers, white<small>Next · €32</small></span><a class="go" href="https://www.next.si/en/style/su930044/e85999" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">4</span><span class="what">Leather shopper, cognac<small>Zign by Zalando, at Zalando · €42.69</small></span><a class="go" href="https://www.zalando.si/zign-leather-torba-za-nakupovanje-cognac-zi151h08b-o11.html" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">5</span><span class="what">Drop row necklace set, pale gold<small>Orelia, at Zalando · €33.75</small></span><a class="go" href="https://www.zalando.si/orelia-drop-row-necklace-3-pack-verizica-pale-gold-coloured-rl651l0lp-f11.html" target="_blank" rel="noopener">View in shop</a></li></ol>
+    </div>
+  </section>
+  <section class="look" id="look-13">
+    <p class="kicker">Look 09</p>
+    <h2>Afternoon out</h2>
+    <p class="lead">A rust cashmere V-neck over a light denim shirt, clean light jeans, a brown belt with a brass buckle, cognac ankle boots and a dark brown leather tote.</p>
+    <div class="pair">
+      <figure>
+        <div class="frame">
+          <img src="look13-flat.jpg" alt="The pieces laid out flat: rust V-neck jumper over a light denim shirt, gold necklaces and bangles, light jeans with a brown belt, a dark brown leather tote, cognac ankle boots" width="1024" height="1536" loading="lazy">
+          <a class="pin" style="left:24%;top:19%" href="https://www.fwrd.com/product-srg-doris-cashmere-vneck-sweater-in-rust/SRGR-WK6/" target="_blank" rel="noopener" aria-label="1, Cashmere V-neck · SRG">1<span class="tip">Cashmere V-neck · SRG</span></a><a class="pin" style="left:61%;top:31%" href="https://www.sezane.com/eu-en/product/max-shirt/very-light-denim" target="_blank" rel="noopener" aria-label="2, Denim shirt · Sézane">2<span class="tip">Denim shirt · Sézane</span></a><a class="pin" style="left:36%;top:62%" href="https://www.cos.com/en-eu-e/women/womenswear/jeans/straightleg/product/column-jeans-straight-light-blue-1161887010" target="_blank" rel="noopener" aria-label="3, Straight-leg jeans · COS">3<span class="tip">Straight-leg jeans · COS</span></a><a class="pin" style="left:45%;top:41%" href="https://www.nordstrom.com/s/horseshoe-buckle-leather-belt-30mm/8373228" target="_blank" rel="noopener" aria-label="4, Leather belt · Ezra Arthur">4<span class="tip">Leather belt · Ezra Arthur</span></a><a class="pin" style="left:78%;top:79%" href="https://www.zalando.si/anna-field-leather-klasicni-gleznjarji-cognac-an611n0bl-o11.html" target="_blank" rel="noopener" aria-label="5, Ankle boots · Anna Field">5<span class="tip">Ankle boots · Anna Field</span></a><a class="pin" style="left:77%;top:55%" href="https://www.stories.com/en-eu/product/leather-tote-bag-dark-brown-1294613006/" target="_blank" rel="noopener" aria-label="6, Leather tote · &amp; Other Stories">6<span class="tip">Leather tote · &amp; Other Stories</span></a>
+        </div>
+        <figcaption>The pieces</figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><img src="look13-model.jpg" alt="A woman in the same outfit in a bright art gallery" width="1024" height="1536" loading="lazy"></div>
+        <figcaption>Worn</figcaption>
+      </figure>
+    </div>
+    <div class="shop">
+      <h3>Shop the look</h3>
+      <ol><li><span class="num">1</span><span class="what">Doris cashmere V-neck jumper, rust<small>SRG, at FWRD · US$270</small></span><a class="go" href="https://www.fwrd.com/product-srg-doris-cashmere-vneck-sweater-in-rust/SRGR-WK6/" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">2</span><span class="what">Max shirt, very light denim<small>Sézane · €100</small></span><a class="go" href="https://www.sezane.com/eu-en/product/max-shirt/very-light-denim" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">3</span><span class="what">Column straight-leg jeans, light blue<small>COS · €49</small></span><a class="go" href="https://www.cos.com/en-eu-e/women/womenswear/jeans/straightleg/product/column-jeans-straight-light-blue-1161887010" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">4</span><span class="what">Horseshoe buckle leather belt, brown and brass<small>Ezra Arthur, at Nordstrom · US$120</small></span><a class="go" href="https://www.nordstrom.com/s/horseshoe-buckle-leather-belt-30mm/8373228" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">5</span><span class="what">Leather ankle boots, cognac<small>Anna Field, at Zalando · €69.99</small></span><a class="go" href="https://www.zalando.si/anna-field-leather-klasicni-gleznjarji-cognac-an611n0bl-o11.html" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">6</span><span class="what">Leather tote bag, dark brown<small>&amp; Other Stories · €179</small></span><a class="go" href="https://www.stories.com/en-eu/product/leather-tote-bag-dark-brown-1294613006/" target="_blank" rel="noopener">View in shop</a></li></ol>
+    </div>
+  </section>
+  <section class="look" id="look-14">
+    <p class="kicker">Look 10</p>
+    <h2>A day in town</h2>
+    <p class="lead">An oversized camel blazer over an ivory silk camisole, mid-blue barrel jeans, grey suede trainers, a taupe half-moon crossbody and round gold sunglasses.</p>
+    <div class="pair">
+      <figure>
+        <div class="frame">
+          <img src="look14-flat.jpg" alt="The pieces laid out flat: a camel blazer, an ivory silk camisole, mid-blue barrel jeans, round sunglasses, a taupe half-moon bag and grey trainers" width="1024" height="1536" loading="lazy">
+          <a class="pin" style="left:29%;top:18%" href="https://www.boozt.com/eu/en/selected-femme/slfrita-ls-relaxed-blazer-camel-mel-noos_32549764/227441211" target="_blank" rel="noopener" aria-label="1, Camel blazer · Selected Femme">1<span class="tip">Camel blazer · Selected Femme</span></a><a class="pin" style="left:72%;top:22%" href="https://www.jasminesilk.com/products/ivory-silk-camisole" target="_blank" rel="noopener" aria-label="2, Silk camisole · Jasmine Silk">2<span class="tip">Silk camisole · Jasmine Silk</span></a><a class="pin" style="left:32%;top:62%" href="https://www.zalando.si/selected-barrel-fit-jeans-high-waist-siroke-kavbojke-medium-blue-denim-0bn21n00d-k11.html" target="_blank" rel="noopener" aria-label="3, Barrel jeans · Selected">3<span class="tip">Barrel jeans · Selected</span></a><a class="pin" style="left:73%;top:80%" href="https://www.marksandspencer.com/si/suede-side-detail-trainers/p/P61227612.html" target="_blank" rel="noopener" aria-label="4, Suede trainers · Marks &amp; Spencer">4<span class="tip">Suede trainers · Marks &amp; Spencer</span></a><a class="pin" style="left:74%;top:58%" href="https://chicandcharm.de/products/tasche-19" target="_blank" rel="noopener" aria-label="5, Half-moon bag · Chic&amp;Charm">5<span class="tip">Half-moon bag · Chic&amp;Charm</span></a><a class="pin" style="left:86%;top:43%" href="https://komono.com/products/pete-gold-black" target="_blank" rel="noopener" aria-label="6, Round sunglasses · KOMONO">6<span class="tip">Round sunglasses · KOMONO</span></a>
+        </div>
+        <figcaption>The pieces</figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><img src="look14-model.jpg" alt="A woman in the same outfit walking through a sunny stone arcade" width="1024" height="1536" loading="lazy"></div>
+        <figcaption>Worn</figcaption>
+      </figure>
+    </div>
+    <div class="shop">
+      <h3>Shop the look</h3>
+      <ol><li><span class="num">1</span><span class="what">Rita relaxed blazer, camel melange<small>Selected Femme, at Boozt · €111.99</small></span><a class="go" href="https://www.boozt.com/eu/en/selected-femme/slfrita-ls-relaxed-blazer-camel-mel-noos_32549764/227441211" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">2</span><span class="what">Mulberry silk camisole, ivory<small>Jasmine Silk · €65.95</small></span><a class="go" href="https://www.jasminesilk.com/products/ivory-silk-camisole" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">3</span><span class="what">High-waist barrel jeans, medium blue<small>Selected, at Zalando · €89.99</small></span><a class="go" href="https://www.zalando.si/selected-barrel-fit-jeans-high-waist-siroke-kavbojke-medium-blue-denim-0bn21n00d-k11.html" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">4</span><span class="what">Suede side-detail trainers, grey<small>Marks &amp; Spencer · €75</small></span><a class="go" href="https://www.marksandspencer.com/si/suede-side-detail-trainers/p/P61227612.html" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">5</span><span class="what">Lunar Luxe moon bag, taupe brown<small>Chic&amp;Charm · €79.99</small></span><a class="go" href="https://chicandcharm.de/products/tasche-19" target="_blank" rel="noopener">View in shop</a></li><li><span class="num">6</span><span class="what">Pete sunglasses, gold and black<small>KOMONO · €129</small></span><a class="go" href="https://komono.com/products/pete-gold-black" target="_blank" rel="noopener">View in shop</a></li></ol>
+    </div>
+  </section>
+  <p class="note">Prices as listed by the shops in October 2026; shops change prices and sizes. The pictures were made with AI; the pieces are real products.</p>
+</div>
+</body>
+</html>
