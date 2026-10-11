@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Shop the look: sample · Metka Albreht</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bone:#faf9f6; --ink:#161616; --muted:#6f6b66; --line:#e4e1da; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; }
+  body { background:var(--bone); color:var(--ink); font-family:Geist, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+         line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:1120px; margin:0 auto; padding:48px 20px 72px; }
+  .kicker { font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin:0 0 14px; }
+  h1 { font-size:clamp(28px,4.6vw,44px); line-height:1.08; letter-spacing:-.02em; font-weight:600; margin:0 0 12px; }
+  .lead { font-size:clamp(15px,2vw,18px); color:#3a3733; max-width:60ch; margin:0 0 32px; }
+
+  .pair { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  figure { margin:0; }
+  .frame { position:relative; background:#eceae5; }
+  .frame img { display:block; width:100%; height:auto; }
+  figcaption { font-size:13px; color:var(--muted); margin-top:8px; }
+
+  /* the discreet markers: a small numbered ring on each piece, the name and shop appear on hover or focus */
+  .pin { position:absolute; transform:translate(-50%,-50%); width:26px; height:26px; border-radius:50%;
+         background:rgba(250,249,246,.92); color:var(--ink); border:1px solid rgba(22,22,22,.55);
+         font-size:12px; font-weight:600; display:grid; place-items:center; text-decoration:none;
+         box-shadow:0 1px 6px rgba(0,0,0,.12); transition:background .2s ease, transform .2s ease; }
+  .pin:hover, .pin:focus-visible { background:var(--ink); color:var(--bone); transform:translate(-50%,-50%) scale(1.08); outline:none; }
+  .pin .tip { position:absolute; left:50%; bottom:calc(100% + 8px); transform:translateX(-50%); white-space:nowrap;
+              background:var(--ink); color:var(--bone); font-size:12px; font-weight:500; padding:6px 10px;
+              opacity:0; pointer-events:none; transition:opacity .2s ease; }
+  .pin:hover .tip, .pin:focus-visible .tip { opacity:1; }
+
+  .shop { margin-top:40px; border-top:1px solid var(--line); }
+  .shop h2 { font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); font-weight:600; margin:22px 0 6px; }
+  .shop ol { list-style:none; margin:0; padding:0; }
+  .shop li { display:grid; grid-template-columns:32px 1fr auto; gap:12px; align-items:baseline;
+             padding:14px 0; border-bottom:1px solid var(--line); }
+  .num { font-size:13px; font-weight:600; color:var(--muted); }
+  .what { font-size:16px; }
+  .what small { display:block; font-size:13px; color:var(--muted); margin-top:2px; }
+  .go { font-size:14px; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--ink); white-space:nowrap; }
+  .go:hover { color:var(--muted); border-color:var(--muted); }
+  .note { font-size:13px; color:var(--muted); margin-top:18px; max-width:70ch; }
+
+  @media (max-width:720px) {
+    .pair { grid-template-columns:1fr; }
+    .shop li { grid-template-columns:26px 1fr; }
+    .go { grid-column:2; justify-self:start; margin-top:4px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">Metka Albreht · Sample, option A</p>
+  <h1>A summer day by the sea</h1>
+  <p class="lead">A loose white linen shirt, dark wide jeans, clean white trainers and a cognac leather tote. Four real pieces you can buy; tap a number to open its shop.</p>
+
+  <div class="pair">
+    <figure>
+      <div class="frame">
+        <img src="look12-flat.jpg" alt="The four pieces laid out flat: white linen shirt, dark wide jeans, cognac leather tote, white leather trainers" width="1024" height="1536">
+        <a class="pin" style="left:36%;top:20%" href="https://www.arket.com/en-eu/product/relaxed-linen-shirt-white-1333156003/" target="_blank" rel="noopener" aria-label="1, Relaxed linen shirt, ARKET">1<span class="tip">Linen shirt · ARKET</span></a>
+        <a class="pin" style="left:31%;top:63%" href="https://www.zalando.si/next-kavbojke-na-trapez-rinse-nx321n150-k12.html" target="_blank" rel="noopener" aria-label="2, Wide-leg jeans, Next">2<span class="tip">Wide-leg jeans · Next</span></a>
+        <a class="pin" style="left:74%;top:57%" href="https://www.zalando.si/zign-leather-torba-za-nakupovanje-cognac-zi151h08b-o11.html" target="_blank" rel="noopener" aria-label="3, Leather tote, Zign">3<span class="tip">Leather tote · Zign</span></a>
+        <a class="pin" style="left:73%;top:83%" href="https://uniformstandard.com/products/womens-series-1-triple-leather" target="_blank" rel="noopener" aria-label="4, White leather trainers, Uniform Standard">4<span class="tip">Leather trainers · Uniform Standard</span></a>
+      </div>
+      <figcaption>The pieces</figcaption>
+    </figure>
+    <figure>
+      <div class="frame">
+        <img src="look12-model.jpg" alt="A woman in the same outfit walking down a sunny seaside street" width="1024" height="1536">
+      </div>
+      <figcaption>Worn</figcaption>
+    </figure>
+  </div>
+
+  <section class="shop" aria-label="Shop the look">
+    <h2>Shop the look</h2>
+    <ol>
+      <li><span class="num">1</span><span class="what">Relaxed linen shirt, white<small>ARKET · €69</small></span><a class="go" href="https://www.arket.com/en-eu/product/relaxed-linen-shirt-white-1333156003/" target="_blank" rel="noopener">View in shop</a></li>
+      <li><span class="num">2</span><span class="what">High-rise wide-leg jeans, rinse<small>Next, at Zalando · €47</small></span><a class="go" href="https://www.zalando.si/next-kavbojke-na-trapez-rinse-nx321n150-k12.html" target="_blank" rel="noopener">View in shop</a></li>
+      <li><span class="num">3</span><span class="what">Leather shopper, cognac<small>Zign, at Zalando · €37.69</small></span><a class="go" href="https://www.zalando.si/zign-leather-torba-za-nakupovanje-cognac-zi151h08b-o11.html" target="_blank" rel="noopener">View in shop</a></li>
+      <li><span class="num">4</span><span class="what">Series 1 leather trainers, white<small>Uniform Standard · £190</small></span><a class="go" href="https://uniformstandard.com/products/womens-series-1-triple-leather" target="_blank" rel="noopener">View in shop</a></li>
+    </ol>
+    <p class="note">Prices as listed by the shops on 11 October 2026. The pictures were made with AI; the pieces are real products.</p>
+  </section>
+</div>
+</body>
+</html>
